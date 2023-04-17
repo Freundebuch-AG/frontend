@@ -1,9 +1,27 @@
 ---
+import Button from "../components/Button.astro";
+import Card from "../components/Card.astro";
+import Modal from "../components/Modal.astro";
 import Layout from "../layouts/Layout.astro";
 ---
 
 <Layout title="Freundebuch">
   <div class="prose m-4 mx-auto">
     <h1 class="text-center">Freundebuch</h1>
+    <div class="lex flex items-center justify-between">
+      <div class="stats mb-4 max-w-sm bg-white shadow">
+        <div class="stat">
+          <div class="stat-title">Längster Dino</div>
+          <div class="stat-value">Stegosaurus</div>
+          <div class="stat-desc flex justify-between">
+            <div>Marvin Otto</div>
+            <div class="ml-1">11 Zeichen</div>
+          </div>
+        </div>
+      </div>
+      <div><Modal /></div>
+    </div>
+
+    <Card />
   </div>
 </Layout>

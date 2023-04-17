@@ -1,0 +1,110 @@
+---
+---
+
+<div class="card w-96 bg-white shadow-xl">
+  <div class="card-body">
+    <h2 class="card-title">Marvin Stickel</h2>
+    <div>
+      <p>Geburtstag: 01.03.1998</p>
+      <p>Liebingsessen: Lasange</p>
+      <p>Liebingstier: Erdmännchen</p>
+      <p>Liebingsdino: Stegosaurus</p>
+    </div>
+    <div class="card-actions justify-end">
+      <label for="delete" class="btn btn-ghost">Löschen</label>
+      <label for="update" class="btn btn-success">Bearbeiten</label>
+    </div>
+  </div>
+</div>
+
+<input type="checkbox" id="update" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box max-w-sm">
+    <h3 class="font-bold text-lg">Bearbeiten</h3>
+    <div class="form-control w-full max-w-xs">
+      <label class="label">
+        <span class="label-text">Vorname</span>
+      </label>
+      <input
+        type="text"
+        placeholder="Type here"
+        class="input input-bordered w-full max-w-xs"
+      />
+    </div>
+    <div class="form-control w-full max-w-xs">
+      <label class="label">
+        <span class="label-text">Nachname</span>
+      </label>
+      <input
+        type="text"
+        placeholder="Type here"
+        class="input input-bordered w-full max-w-xs"
+      />
+    </div>
+    <div class="form-control w-full max-w-xs">
+      <label class="label">
+        <span class="label-text">Geburtstag</span>
+      </label>
+      <input
+        type="date"
+        placeholder="Type here"
+        class="input input-bordered w-full max-w-xs"
+      />
+    </div>
+    <div class="form-control w-full max-w-xs">
+      <label class="label">
+        <span class="label-text">Liebingsessen</span>
+      </label>
+      <input
+        type="text"
+        placeholder="Type here"
+        class="input input-bordered w-full max-w-xs"
+      />
+    </div>
+    <div class="form-control w-full max-w-xs">
+      <label class="label">
+        <span class="label-text">Liebingstier</span>
+      </label>
+      <input
+        type="text"
+        placeholder="Type here"
+        class="input input-bordered w-full max-w-xs"
+      />
+    </div>
+    <div class="form-control w-full max-w-xs">
+      <label class="label">
+        <span class="label-text">Liebingsdino</span>
+      </label>
+      <input
+        type="text"
+        placeholder="Type here"
+        class="input input-bordered w-full max-w-xs"
+      />
+    </div>
+    <div class="form-control w-full max-w-xs">
+      <label class="label">
+        <span class="label-text">What is your name?</span>
+      </label>
+      <input
+        type="text"
+        placeholder="Type here"
+        class="input input-bordered w-full max-w-xs"
+      />
+    </div>
+    <div class="modal-action">
+      <label for="update" class="btn btn-success">Speichern</label>
+    </div>
+  </div>
+</div>
+
+<input type="checkbox" id="delete" class="modal-toggle" />
+<div class="modal">
+  <div class="modal-box">
+    <h3 class="font-bold text-lg">Bist du dir sicher?</h3>
+    <p class="py-4">Möchstest du wirklich weniger Freunde haben?</p>
+    <div class="modal-action modal-open">
+      <label for="delete" class="btn btn-ghost">Abbruch</label>
+      <label for="delete" class="btn btn-error">OK</label>
+    </div>
+  </div>
+</div>

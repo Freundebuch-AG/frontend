@@ -1,0 +1,27 @@
+{
+  "extends": "astro/tsconfigs/base",
+  "include": [
+    ".eslintrc.cjs",
+    "tailwind.config.cjs",
+    "astro.config.mjs",
+    "./src",
+    "./src/**/*.js",
+    "./src/**/*.ts",
+    "./src/**/*.astro"
+  ],
+  "exclude": ["node_modules"],
+  "compilerOptions": {
+    "target": "ESNext",
+    "module": "NodeNext",
+    "jsx": "react-jsx",
+    "moduleResolution": "nodenext",
+    "resolveJsonModule": true,
+    "noEmit": true,
+    "skipLibCheck": true,
+    "allowSyntheticDefaultImports": true,
+    "strictNullChecks": true,
+    "sourceMap": true,
+    "checkJs": true,
+    "verbatimModuleSyntax": true
+  }
+}

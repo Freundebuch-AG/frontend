@@ -1,110 +1,170 @@
 ---
+import type { Friend } from "../typings/friend.js";
+import { bdayToDate, dateToInputValue, formatDate } from "./utils/dates.js";
+
+export interface Props {
+  friend: Friend;
+}
+
+const { friend } = Astro.props;
 ---
 
-<div class="card w-96 bg-white shadow-xl">
+<div class="card bg-white shadow-xl">
   <div class="card-body">
-    <h2 class="card-title">Marvin Stickel</h2>
+    <h2 class="card-title">{friend.firstName} {friend.lastName}</h2>
     <div>
-      <p>Geburtstag: 01.03.1998</p>
-      <p>Liebingsessen: Lasange</p>
-      <p>Liebingstier: Erdmännchen</p>
-      <p>Liebingsdino: Stegosaurus</p>
+      <p>Geburtstag: {formatDate(bdayToDate(friend.bday))}</p>
+      <p>Liebingsessen: {friend.food}</p>
+      <p>Liebingstier: {friend.animal}</p>
+      <p>Liebingsdino: {friend.dino}</p>
     </div>
     <div class="card-actions justify-end">
-      <label for="delete" class="btn btn-ghost">Löschen</label>
-      <label for="update" class="btn btn-success">Bearbeiten</label>
+      <label for="delete" class="btn-ghost btn">Löschen</label>
+      <label for="update" class="btn-success btn">Bearbeiten</label>
     </div>
   </div>
 </div>
+
+<script>
+  var form = document.getElementById("updateForm");
+  form.onsubmit = function (event) {
+    var xhr = new XMLHttpRequest();
+    var formData = new FormData(form);
+    //open the request
+    xhr.open("PUT", `http://localhost:8080/friend/update/${friend._id}`, true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+
+    //send the form data
+    xhr.send(JSON.stringify(Object.fromEntries(formData)));
+
+    xhr.onreadystatechange = function () {
+      if (xhr.readyState == XMLHttpRequest.DONE) {
+        form.reset();
+        location.reload(); //reset form after AJAX success or do something else
+      }
+    };
+    //Fail the onsubmit to avoid page refresh.
+    return false;
+  };
+</script>
 
 <input type="checkbox" id="update" class="modal-toggle" />
 <div class="modal">
   <div class="modal-box max-w-sm">
-    <h3 class="font-bold text-lg">Bearbeiten</h3>
-    <div class="form-control w-full max-w-xs">
-      <label class="label">
-        <span class="label-text">Vorname</span>
-      </label>
-      <input
-        type="text"
-        placeholder="Type here"
-        class="input input-bordered w-full max-w-xs"
-      />
-    </div>
-    <div class="form-control w-full max-w-xs">
-      <label class="label">
-        <span class="label-text">Nachname</span>
-      </label>
-      <input
-        type="text"
-        placeholder="Type here"
-        class="input input-bordered w-full max-w-xs"
-      />
-    </div>
-    <div class="form-control w-full max-w-xs">
-      <label class="label">
-        <span class="label-text">Geburtstag</span>
-      </label>
-      <input
-        type="date"
-        placeholder="Type here"
-        class="input input-bordered w-full max-w-xs"
-      />
-    </div>
-    <div class="form-control w-full max-w-xs">
-      <label class="label">
-        <span class="label-text">Liebingsessen</span>
-      </label>
-      <input
-        type="text"
-        placeholder="Type here"
-        class="input input-bordered w-full max-w-xs"
-      />
-    </div>
-    <div class="form-control w-full max-w-xs">
-      <label class="label">
-        <span class="label-text">Liebingstier</span>
-      </label>
-      <input
-        type="text"
-        placeholder="Type here"
-        class="input input-bordered w-full max-w-xs"
-      />
-    </div>
-    <div class="form-control w-full max-w-xs">
-      <label class="label">
-        <span class="label-text">Liebingsdino</span>
-      </label>
-      <input
-        type="text"
-        placeholder="Type here"
-        class="input input-bordered w-full max-w-xs"
-      />
-    </div>
-    <div class="form-control w-full max-w-xs">
-      <label class="label">
-        <span class="label-text">What is your name?</span>
-      </label>
-      <input
-        type="text"
-        placeholder="Type here"
-        class="input input-bordered w-full max-w-xs"
-      />
-    </div>
-    <div class="modal-action">
-      <label for="update" class="btn btn-success">Speichern</label>
-    </div>
+    <h3 class="text-lg font-bold">Bearbeiten</h3>
+
+    <form
+      action=`http://localhost:8080/friend/update/${friend._id}`
+      method="put"
+    >
+      <div class="form-control w-full max-w-xs">
+        <label class="label">
+          <span class="label-text">Vorname</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Type here"
+          value={friend.firstName}
+          class="input-bordered input w-full max-w-xs"
+        />
+      </div>
+      <div class="form-control w-full max-w-xs">
+        <label class="label">
+          <span class="label-text">Nachname</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Type here"
+          value={friend.lastName}
+          class="input-bordered input w-full max-w-xs"
+        />
+      </div>
+      <div class="form-control w-full max-w-xs">
+        <label class="label">
+          <span class="label-text">Geburtstag</span>
+        </label>
+        <input
+          type="date"
+          placeholder="Type here"
+          value={dateToInputValue(bdayToDate(friend.bday))}
+          class="input-bordered input w-full max-w-xs"
+        />
+      </div>
+      <div class="form-control w-full max-w-xs">
+        <label class="label">
+          <span class="label-text">Liebingsessen</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Type here"
+          value={friend.food}
+          class="input-bordered input w-full max-w-xs"
+        />
+      </div>
+      <div class="form-control w-full max-w-xs">
+        <label class="label">
+          <span class="label-text">Liebingstier</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Type here"
+          value={friend.animal}
+          class="input-bordered input w-full max-w-xs"
+        />
+      </div>
+      <div class="form-control w-full max-w-xs">
+        <label class="label">
+          <span class="label-text">Liebingsdino</span>
+        </label>
+        <input
+          type="text"
+          placeholder="Type here"
+          value={friend.dino}
+          class="input-bordered input w-full max-w-xs"
+        />
+      </div>
+      <div class="modal-action">
+        <input type="submit" class="btn-success btn" value="Speichern" />
+      </div>
+    </form>
   </div>
 </div>
+
+<script>
+  var form = document.getElementById("delete");
+  form.onsubmit = function (event) {
+    var xhr = new XMLHttpRequest();
+    var formData = new FormData(form);
+    //open the request
+    xhr.open(
+      "DELETE",
+      `http://localhost:8080/friend/delete/${friend._id}`,
+      true
+    );
+    //send the form data
+    xhr.send(JSON.stringify(Object.fromEntries(formData)));
+
+    xhr.onload = function () {
+      location.reload();
+    }; //reset form after AJAX success or do something else
+    //Fail the onsubmit to avoid page refresh.
+    return false;
+  };
+</script>
 
 <input type="checkbox" id="delete" class="modal-toggle" />
 <div class="modal">
   <div class="modal-box">
-    <h3 class="font-bold text-lg">Bist du dir sicher?</h3>
+    <h3 class="text-lg font-bold">Bist du dir sicher?</h3>
     <p class="py-4">Möchstest du wirklich weniger Freunde haben?</p>
-    <div class="modal-action modal-open">
-      <label for="delete" class="btn btn-ghost">Abbruch</label>
-      <label for="delete" class="btn btn-error">OK</label>
+    <div class="modal-open modal-action">
+      <label for="delete" class="btn-ghost btn">Abbruch</label>
+      <form
+        action=`http://localhost:8080/friend/delete/${friend._id}`
+        method="delete"
+      >
+        <input type="submit" class="btn-error btn modal-open" value="OK" />
+      </form>
     </div>
   </div>
 </div>

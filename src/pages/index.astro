@@ -1,27 +1,47 @@
 ---
-import Button from "../components/Button.astro";
+import type { TopLongDino } from ".../typings/topLongDino.js";
 import Card from "../components/Card.astro";
 import Modal from "../components/Modal.astro";
 import Layout from "../layouts/Layout.astro";
+import type { AllFriendsResponse } from "../typings/friend.js";
+
+const friends: AllFriendsResponse = await fetch(
+  "http://localhost:8080/friend"
+).then((response) => response.json());
+
+console.log(friends);
+
+const dino: TopLongDino = await fetch("http://localhost:8081/dino").then(
+  (response) => response.json()
+);
+
+console.log(dino);
 ---
 
 <Layout title="Freundebuch">
-  <div class="prose m-4 mx-auto">
-    <h1 class="text-center">Freundebuch</h1>
+  <div class="mx-auto max-w-sm md:max-w-4xl">
+    <div class="prose mx-auto mb-5">
+      <h1 class="text-center">Freundebuch</h1>
+    </div>
+
     <div class="lex flex items-center justify-between">
       <div class="stats mb-4 max-w-sm bg-white shadow">
         <div class="stat">
-          <div class="stat-title">Längster Dino</div>
-          <div class="stat-value">Stegosaurus</div>
+          <div class="stat-title">Längster Dino bisher</div>
+          <div class="stat-value">{dino.dino}</div>
           <div class="stat-desc flex justify-between">
-            <div>Marvin Otto</div>
-            <div class="ml-1">11 Zeichen</div>
+            <div>{dino.firstName} {dino.lastName}</div>
+            <div class="ml-1">{dino.dino} Zeichen</div>
           </div>
         </div>
       </div>
-      <div><Modal /></div>
+      <div>
+        <Modal />
+      </div>
     </div>
-
-    <Card />
+    <div class="divider"></div>
+    <div class="grid grid-cols-2 gap-2">
+      {friends.map((friend) => <Card friend={friend} />)}
+    </div>
   </div>
 </Layout>
